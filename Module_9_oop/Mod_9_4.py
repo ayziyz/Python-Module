@@ -47,6 +47,8 @@ def main():
             if car.travelled_distance >= 10000:
                 print(f"Race over! {car.registration_number} has exceeded 10,000 km.")
                 race_finished = True
+                break
+
 
         if race_finished:
             break
