@@ -4,7 +4,6 @@ import json
 lat = 60
 lon = 21
 API_key = '53629cd97d95a4b8591741d1fb9c9809'
-part = 'minutely,hourly'
 request_url = f"https://api.openweathermap.org/data/2.5/weather?units=metric&lat={lat}&lon={lon}&appid={API_key}"
 
 try:
@@ -14,14 +13,14 @@ try:
     weather = response.json()
     print("Response JSON:", json.dumps(weather, indent=2))
 
-    if 'current' in weather:
+    if 'main' in weather and 'weather' in weather:
         print(f"""
-        Location: Latitude {lat}, Longitude {lon}
-        Temperature: {weather['current']['temp']}°C
-        Weather: {weather['current']['weather'][0]['description']}
-        """)
+            Location: Latitude {lat}, Longitude {lon}
+            Temperature: {weather['main']['temp']}°C
+            Weather: {weather['weather'][0]['description']}
+            """)
     else:
-        print("The 'current' key is missing from the response.")
+        print("Unexpected response format. 'main' or 'weather' key is missing from the response.")
 
 except requests.exceptions.HTTPError as http_err:
     print(f"HTTP error occurred: {http_err}")
